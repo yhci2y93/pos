@@ -1,5 +1,7 @@
 .blue_background {
     background-color:#836FFF;
+    border-radius: 7px;
+    font-size: 23px;
 }
 .white_font {
     color:	#FFFFFF;
@@ -9,25 +11,59 @@
 }
 .title_background {
     background-color:#1E1E1E;
-    height: 30px;
+    height:50px;
 }
-.font_properties {
-    color:#FFFFFF;
-    text-align:center;
+.word_spacing{
+    letter-spacing:0.5px;
+    line-height:23px;
+}
+.p1_button{
+    color: #cccccc;
+    background-color:#1E1E1E;
+    height:50px;
+    top:0px;
+    border:0px;
+    font-size: 100%;
+    margin-left:10px;
+}
+.p2_button{
+    color:#CCCCCC;
+    background-color:#1E1E1E;
+    height:50px;
+    top:0px;
+    border:0px;
+    font-size: 100%;
+}
+.p3_button{
+    color:#CCCCCC;
+    background-color:#1E1E1E;
+    height:50px;
+    top:0px;
+    border:0px;
+    font-size: 100%;
+}
+.p4_button{
+    color:#CCCCCC;
+    background-color:#1E1E1E;
+    height:50px;
+    top:0px;
+    border:0px;
+    font-size: 100%;
+    float:right;
+}
+.margin{
+    margin-bottom:10px;
+    margin-top: 10px;
 }
 .index_layout {
     border: 2px;
     margin-left: 10px;
     margin-right: 10px;
-    margin-top:10px;
-    position:absolute;
+    padding-top:10px;
+    padding-bottom: 10px;
+    padding-left: 10px;
+    padding-right: 10px;
     background-color:#CCCCCC;
 }
-.index_layouts {
-    border: 2px;
-    margin-left: 20px;
-    margin-right: 20px;
-    margin-top:10px;
-    margin-bottom:10px;
-}
+
 
