@@ -17,15 +17,17 @@
 }
 .index_layout {
     border: 2px;
-    width: 600px;
-    margin: auto;
-    height: 300px;
+    margin-left: 10px;
+    margin-right: 10px;
+    margin-top:10px;
+    position:absolute;
     background-color:#CCCCCC;
 }
 .index_layouts {
     border: 2px;
-    width: 500px;
-    margin: auto;
-    height: 260px;
+    margin-left: 20px;
+    margin-right: 20px;
+    margin-top:10px;
+    margin-bottom:10px;
 }
 
