@@ -12,6 +12,7 @@
 .title_background {
     background-color:#1E1E1E;
     height:50px;
+    width: 100%;
 }
 .word_spacing{
     letter-spacing:0.5px;
@@ -24,7 +25,7 @@
     top:0px;
     border:0px;
     font-size: 100%;
-    margin-left:10px;
+    margin-left:10%;
 }
 .p2_button{
     color:#CCCCCC;
@@ -50,19 +51,29 @@
     border:0px;
     font-size: 100%;
     float:right;
+    margin-right: 10%;
+}
+.h1_margin{
+    margin-bottom:30px;
+    margin-top: 20px;
+    font-size: 350%;
 }
 .margin{
-    margin-bottom:10px;
+    margin-bottom:20px;
     margin-top: 10px;
+    font-size: 150%;
+    line-height: 130%;
+
 }
 .index_layout {
     border: 2px;
-    margin-left: 10px;
-    margin-right: 10px;
-    padding-top:10px;
-    padding-bottom: 10px;
-    padding-left: 10px;
-    padding-right: 10px;
+    margin-left: 5%;
+    margin-right: 5%;
+    margin-top: 2%;
+    padding-top:7%;
+    padding-bottom: 8%;
+    padding-left: 7%;
+    padding-right: 7%;
     background-color:#CCCCCC;
 }
 
