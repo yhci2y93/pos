@@ -1,49 +1,44 @@
 body {
-    margin: 0px;
-    padding: 0px;
+    margin: 0;
+    padding: 0;
     width: 1300px;
 }
-.title_background {
+.button_title {
     background-color:#1E1E1E;
     height:50px;
-
-}
-.button_layout{
-    height:50px;
-    margin-left: 65px;
-    margin-right: 65px;
+    padding-left: 65px;
+    float:left;
+    width:80.2%;
 }
 .button{
-    color:#CCCCCC;
-    background-color:#1E1E1E;
+    color:#9E9B9B;/*背景外面的颜色*/
+    background-color:#1E1E1E;/*背景颜色*/
     height:50px;
-    top:0px;
-    border:0px;
+    top:0;
+    border:0;
     padding-left: 15px;
     padding-right: 15px;
     font-size: 100%;
 }
-.button_right{
-    float:right;
+.right{
+    background-color:#1E1E1E;
+    height:50px;
+    padding-right: 65px;
 }
 .img{
     height:25px;
     width: 25px;
-
     vertical-align: middle;
 }
-.index_layout {
+.main {
     margin-left: 5%;
     margin-right: 5%;
-    margin-top: 70px;
+    margin-top: 30px;
     margin-bottom: 30px;
-    padding-top:5%;
-    padding-bottom: 5%;
-    padding-left: 4%;
-    padding-right: 4%;
+    padding: 5% 4% 5% 4%;/*顺序　上　右　下　左*/
     background-color:#E4E0E0;
 }
-.font_style{
+.title{
     margin-bottom:10px;
     margin-top: 0;
     font-size: 78px;
@@ -51,14 +46,14 @@ body {
     font-weight: 900;
     font-family: monospace;
 }
-.font_layout{
+.text{
     margin-bottom:20px;
     margin-top: 10px;
     font-size: 155%;
     line-height: 139%;
 
 }
-.blue_background {
+.button_style{
     background-color:#0477CA;
     color:	#FFFFFF;
     border-radius: 7px;
