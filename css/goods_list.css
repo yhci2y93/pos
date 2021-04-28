@@ -3,12 +3,12 @@ body {
     padding: 0;
     width: 1300px;
     font-family: monospace;
-    font-weight: 700;
 }
 .button_title{
     height:50px;
     background-color:#1E1E1E;
     float:left;
+    margin-left: 65px;
     width:80%;
 }
 .button{
@@ -53,6 +53,7 @@ body {
     margin-bottom: 0;
     height:50%;
     padding-top: 13.5px;
+    font-weight: 700;
 }
 .border_within{
     border-style: solid none none none;
@@ -67,6 +68,9 @@ table {
 table,th, td {
     border: 1px solid #cccccc;
 }
+.attribute{/*属性*/
+    height:30px;
+}
 .table_th{
     width:230px;
 }
@@ -76,6 +80,19 @@ table,th, td {
 .table_th_button{
     width:260px;
 }
-.attribute{
+
+.tuple{/*元组*/
+    height:40px;
+}
+.tuple_info{
+    text-align: center;
+}
+.button_style{
+    background-color:#0477CA;
+    color:	#FFFFFF;
+    border-radius: 7px;
+    font-size:15px;
+    width:100px;
     height:30px;
+    border:0;
 }
