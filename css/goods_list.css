@@ -8,7 +8,7 @@ body {
     height:50px;
     background-color:#1E1E1E;
     float:left;
-    margin-left: 65px;
+    padding-left: 65px;
     width:80%;
 }
 .button{
@@ -26,7 +26,7 @@ body {
 .right{
     background-color:#1E1E1E;
     height:50px;
-    padding-right: 65px;
+
 }
 .img{
     height:25px;
@@ -96,6 +96,9 @@ table,th, td {
     height:30px;
     border:0;
 }
-.a{
-    float:left;
+＃shopping{
+    display: inline;/*div并列*/
+}
+.b{
+    display: inline;
 }
