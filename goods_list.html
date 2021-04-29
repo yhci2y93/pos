@@ -7,23 +7,13 @@
 </head>
 <body>
 <div>
-    <script type="text/javascript">
-        function count(){
-            if (sessionStorage.a) {
-                sessionStorage.a=Number(sessionStorage.a) +1;
-            } else {
-                sessionStorage.a=1;
-            }
-            document.getElementById("a").innerHTML=sessionStorage.a;
-        }
-    </script>
     <div class="button_title">
         <button class="button" onclick="{location.href='goods_list.html'}">Let's Go</button>
         <button class="button" onclick="{location.href='index.html'}">主页</button>
         <button class="button" onclick="{location.href='goods_list.html'}">商品列表</button>
     </div>
     <div class="right">
-        <button class="button"><img src="99.png" class="img" />购物车(<div id="a" class="b" onclick="count()">0</div><div class="b">)</div></button>
+        <button class="button" onclick="{location.href='shopping_cart.html'}"><img src="99.png" class="img" />购物车(<div id="shopping_cart" onclick="count()"></div><div class="brackets">)</div></button>
     </div>
 </div>
 <div class="border">
@@ -63,7 +53,7 @@
                 <td>5.5</td>
                 <td>斤</td>
                 <td>
-                    <button class="button_style">加入购物车</button>
+                    <button class="button_style" onclick="count()">加入购物车</button>
                 </td>
             </tr>
             <tr class="tuple tuple_info">
@@ -72,7 +62,7 @@
                 <td>15</td>
                 <td>斤</td>
                 <td>
-                    <button class="button_style">加入购物车</button>
+                    <button class="button_style" onclick="count()">加入购物车</button>
                 </td>
             </tr>
             <tr class="tuple tuple_info">
@@ -81,7 +71,7 @@
                 <td>2</td>
                 <td>个</td>
                 <td>
-                    <button class="button_style">加入购物车</button>
+                    <button class="button_style" onclick="count()">加入购物车</button>
                 </td>
             </tr>
             <tr class="tuple tuple_info">
@@ -90,11 +80,12 @@
                 <td>4.5</td>
                 <td>袋</td>
                 <td>
-                    <button class="button_style">加入购物车</button>
+                    <button class="button_style" onclick="count()">加入购物车</button>
                 </td>
             </tr>
         </table>
     </div>
 </div>
+<script src="js/goods_list.js"></script>
 </body>
 </html>

@@ -26,7 +26,6 @@ body {
 .right{
     background-color:#1E1E1E;
     height:50px;
-
 }
 .img{
     height:25px;
@@ -96,9 +95,9 @@ table,th, td {
     height:30px;
     border:0;
 }
-＃a{
+#shopping_cart{
     display: inline;/*div并列*/
 }
-.b{
+.brackets{
     display: inline;
 }
