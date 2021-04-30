@@ -3,8 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <link rel="stylesheet" href="css/shopping_cart.css">
 </head>
 <body>
-
+<div>
+    <div class="button_title">
+        <button class="button" onclick="{location.href='goods_list.html'}">Let's Go</button>
+        <button class="button" onclick="{location.href='index.html'}">主页</button>
+        <button class="button" onclick="{location.href='goods_list.html'}">商品列表</button>
+    </div>
+    <div class="right">
+        <button class="button color" onclick="{location.href='shopping_cart.html'}"><img src="99.png" class="img" />购物车(<div id="shopping_cart" onclick="count()"></div><div class="brackets">)</div></button>
+    </div>
+</div>
 </body>
+<script src="js/goods_list.js"></script>
+<script src="js/addR0w.js"></script>
 </html>

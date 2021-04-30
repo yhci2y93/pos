@@ -8,7 +8,7 @@ body {
     height:50px;
     padding-left: 65px;
     float:left;
-    width:79.2%;
+    width:80%;
 }
 .button{
     color:#9E9B9B;/*背景外面的颜色*/
@@ -19,13 +19,13 @@ body {
     padding:0 15px;
     font-size: 100%;
 }
-.button:active {
+.color{
     color:#FFFFFF;
+    background-color:black;
 }
 .right{
     background-color:#1E1E1E;
     height:50px;
-    padding-right: 65px;
 }
 .img{
     height:25px;
