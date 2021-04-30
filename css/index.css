@@ -8,7 +8,7 @@ body {
     height:50px;
     padding-left: 65px;
     float:left;
-    width:80.2%;
+    width:79.2%;
 }
 .button{
     color:#9E9B9B;/*背景外面的颜色*/
@@ -60,4 +60,10 @@ body {
     width:100px;
     height:50px;
     border:0;
+}
+#shopping_cart{
+    display: inline;/*div并列*/
+}
+.brackets{
+    display: inline;
 }
