@@ -36,9 +36,6 @@ body {
 #shopping_cart{
     display: inline;/*div并列*/
 }
-.brackets{
-    display: inline;
-}
 .margin{
     border-radius:5px;
     border-style: solid;
