@@ -20,11 +20,11 @@ body {
     padding:0 15px;
     font-size: 100%;
 }
-.color{
+.goods_list_label_color{
     color:#FFFFFF;
     background-color:black;
 }
-.right{
+.shopping_cart_label{
     background-color:#1E1E1E;
     height:50px;
 }
@@ -33,7 +33,7 @@ body {
     width: 25px;
     vertical-align: middle;/*图片垂直居中*/
 }
-#shopping_cart{
+#shopping_cart_num{
     display: inline;/*div并列*/
 }
 .margin{
@@ -98,7 +98,4 @@ td{
     width:90px;
     height:27px;
     border:0;
-}
-.onclick_index{
-
 }

@@ -1,7 +1,6 @@
 /**
  * Created by lenovo on 16-7-1.
  */
-addrow();
 function addrow() {
     var goods_info = [
         {type: '饮料', name: '可口可乐', count: '3', unit: '瓶'},
