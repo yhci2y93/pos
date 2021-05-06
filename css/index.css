@@ -19,11 +19,11 @@ body {
     padding:0 15px;
     font-size: 100%;
 }
-.color{
+.index_label_color{
     color:#FFFFFF;
     background-color:black;
 }
-.right{
+.shopping_cart_label{
     background-color:#1E1E1E;
     height:50px;
 }

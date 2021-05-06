@@ -36,7 +36,7 @@ body {
 #shopping_cart_num{
     display: inline;/*div并列*/
 }
-.margin{
+.overall_layout{
     border-radius:5px;
     border-style: solid;
     border-color: #cccccc;
@@ -58,7 +58,7 @@ body {
     padding-top: 20px;
     font-weight: 700;
 }
-.border_within{
+.title_bottom{
     border-style: solid none none none;
     border-color: #cccccc;
     width:1170px;
@@ -84,8 +84,10 @@ table,th, td {
     width:260px;
 }
 td{
-    height:50px;
+    height:40px;
     text-align: center;
+    vertical-align: top;
+    padding-top: 15px;
 }
 .tuple_info{
 
