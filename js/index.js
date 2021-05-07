@@ -7,8 +7,8 @@ window.onload=function(){
     index_jump_function();
 }
 function shopping_cart_null_check(){
-    if (sessionStorage.getItem("num") == null) { sessionStorage.setItem("num", 0);}//判断开始是否有数.
-    var number = sessionStorage.getItem("num");
+    if (localStorage.getItem("num") == null) { sessionStorage.setItem("num", 0);}//判断开始是否有数.
+    var number = localStorage.getItem("num");
     document.getElementById("shopping_cart_num").innerText = number;
 }
 function display_shopping_cart_num(){

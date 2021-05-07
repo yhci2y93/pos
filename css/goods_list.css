@@ -2,7 +2,7 @@ body {
     margin: 0;
     padding: 0;
     width: 1300px;
-    font-family: arial;
+    font-family: sans-serif;
 }
 .button_title{
     height:50px;
@@ -36,7 +36,7 @@ body {
 #shopping_cart_num{
     display: inline;/*div并列*/
 }
-.overall_layout{
+.main{
     border-radius:5px;
     border-style: solid;
     border-color: #cccccc;
@@ -71,7 +71,7 @@ table {
 table,th, td {
     border: 1px solid #cccccc;
 }
-.attribute{/*属性*/
+.attribute_height{/*属性*/
     height:40px;
 }
 .table_th{
@@ -88,9 +88,6 @@ td{
     text-align: center;
     vertical-align: top;
     padding-top: 15px;
-}
-.tuple_info{
-
 }
 .button_style{
     background-color:#0477CA;

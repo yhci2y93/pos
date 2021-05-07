@@ -8,15 +8,15 @@ window.onload=function(){
 }
 
 function shopping_cart_null_check(){
-    if (sessionStorage.getItem("num") == null) { sessionStorage.setItem("num", 0);}//判断开始是否有数.
-    var number = sessionStorage.getItem("num");
+    if (localStorage.getItem("num") == null) { localStorage.setItem("num", 0);}//判断开始是否有数.
+    var number = localStorage.getItem("num");
     document.getElementById("shopping_cart_num").innerText = number;
 }
 
 function shopping_cart_count(){
     var replace = document.getElementById("shopping_cart_num").innerText;//取出id="shopping_cart"标签之间的数，给replace.
     replace = parseInt(replace) + 1;
-    sessionStorage.setItem("num", replace);//把数据存人sessionStorage.
+    localStorage.setItem("num", replace);//把数据存人sessionStorage.
     document.getElementById("shopping_cart_num").innerText = replace;//输出数到id="shopping_cart"标签之间。
 }
 
@@ -45,6 +45,6 @@ function add_rows() {
         var trObj = document.createElement("tr");//用于创建指定的HTML元素。
         trObj.id = new Date().getTime();
         trObj.innerHTML += "<td>" + goods_info[i].type + "</td><td>" + goods_info[i].name + "</td><td>" + goods_info[i].count + "</td><td>" + goods_info[i].unit + "</td><td><button class='button_style' onclick='shopping_cart_count()'>加入购物车</button></td>";
-        document.getElementById("tb").appendChild(trObj);//appendChild()方法向节点添加最后一个子节点.
+        document.getElementById("table_body").appendChild(trObj);//appendChild()方法向节点添加最后一个子节点.
     }
 }
