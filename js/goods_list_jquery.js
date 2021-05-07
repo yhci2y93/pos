@@ -1,23 +1,22 @@
 /**
- * Created by lenovo on 16-6-29.
+ * Created by lenovo on 16-7-8.
  */
-window.onload=function(){
+$(document).ready(function(){
     shopping_cart_null_check();
-    add_rows();
     goods_list_jump_function();
-}
-
+    add_rows();
+})
 function shopping_cart_null_check(){
-    if (sessionStorage.getItem("num") == null) { sessionStorage.setItem("num", 0);}//判断开始是否有数.
-    var number = sessionStorage.getItem("num");
-    document.getElementById("shopping_cart_num").innerText = number;
+    if (localStorage.getItem("num") == null) { localStorage.setItem("num", 0);}//判断开始是否有数.
+    var number = localStorage.getItem("num");
+    $("#shopping_cart_num").text(number);
 }
 
 function shopping_cart_count(){
-    var replace = document.getElementById("shopping_cart_num").innerText;//取出id="shopping_cart"标签之间的数，给replace.
+    var replace = $("#shopping_cart_num").text();
     replace = parseInt(replace) + 1;
-    sessionStorage.setItem("num", replace);//把数据存人sessionStorage.
-    document.getElementById("shopping_cart_num").innerText = replace;//输出数到id="shopping_cart"标签之间。
+    localStorage.setItem("num", replace);
+    $("#shopping_cart_num").text(replace);
 }
 
 function goods_list_jump_function() {
@@ -28,9 +27,9 @@ function goods_list_jump_function() {
 
 function add_button_event(id_name,file_name)
 {
-    document.getElementById(id_name).onclick = function () {
+    $("button#"+id_name+"").click(function(){
         window.location.href = file_name;
-    }
+    });
 }
 
 function add_rows() {
@@ -48,3 +47,4 @@ function add_rows() {
         document.getElementById("table_body").appendChild(trObj);//appendChild()方法向节点添加最后一个子节点.
     }
 }
+
