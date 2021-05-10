@@ -19,11 +19,11 @@ body {
     padding:0 15px;
     font-size: 100%;
 }
-.color{
+.index_label_color{
     color:#FFFFFF;
     background-color:black;
 }
-.right{
+.shopping_cart_label{
     background-color:#1E1E1E;
     height:50px;
 }
@@ -35,6 +35,17 @@ body {
 #shopping_cart{
     display: inline;/*div并列*/
 }
-.brackets{
-    display: inline;
+.main{
+    border-radius:5px;
+    border-style: solid;
+    border-color: #cccccc;
+    width:1170px;
+    margin: 30px 65px;
+    border-width: 1px;
+}
+.title_bottom{
+    border-style: solid none none none;
+    border-color: #cccccc;
+    width:1170px;
+    border-width: 1px;
 }
