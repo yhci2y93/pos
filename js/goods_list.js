@@ -1,26 +1,25 @@
 /**
- * Created by lenovo on 16-6-29.
+ * Created by lenovo on 16-7-8.
  */
-window.onload=function(){
-    shopping_cart_null_check();
+$(document).ready(function(){
+    check_shopping_cart_null();
+    get_goods_list_jump_function();
     add_rows();
-    goods_list_jump_function();
-}
-
-function shopping_cart_null_check(){
-    if (sessionStorage.getItem("num") == null) { sessionStorage.setItem("num", 0);}//判断开始是否有数.
-    var number = sessionStorage.getItem("num");
-    document.getElementById("shopping_cart_num").innerText = number;
+})
+function check_shopping_cart_null(){
+    if (localStorage.getItem("num") == null) { localStorage.setItem("num", 0);}//判断开始是否有数.
+    var number = localStorage.getItem("num");
+    $("#shopping_cart_num").text(number);
 }
 
 function shopping_cart_count(){
-    var replace = document.getElementById("shopping_cart_num").innerText;//取出id="shopping_cart"标签之间的数，给replace.
+    var replace = $("#shopping_cart_num").text();
     replace = parseInt(replace) + 1;
-    sessionStorage.setItem("num", replace);//把数据存人sessionStorage.
-    document.getElementById("shopping_cart_num").innerText = replace;//输出数到id="shopping_cart"标签之间。
+    localStorage.setItem("num", replace);
+    $("#shopping_cart_num").text(replace);
 }
 
-function goods_list_jump_function() {
+function get_goods_list_jump_function() {
     add_button_event("lets_label","goods_list.html");
     add_button_event("index","index.html");
     add_button_event("shopping","shopping_cart.html");
@@ -28,9 +27,9 @@ function goods_list_jump_function() {
 
 function add_button_event(id_name,file_name)
 {
-    document.getElementById(id_name).onclick = function () {
+    $("button#"+id_name+"").click(function(){
         window.location.href = file_name;
-    }
+    });
 }
 
 function add_rows() {
@@ -42,9 +41,7 @@ function add_rows() {
         {type: '生活用品', name: '电池', count: '2', unit: '个'},
         {type: '食品', name: '方便面', count: '4.5', unit: '袋'}];
     for (var i = 0; i < goods_info.length; i++) {
-        var trObj = document.createElement("tr");//用于创建指定的HTML元素。
-        trObj.id = new Date().getTime();
-        trObj.innerHTML += "<td>" + goods_info[i].type + "</td><td>" + goods_info[i].name + "</td><td>" + goods_info[i].count + "</td><td>" + goods_info[i].unit + "</td><td><button class='button_style' onclick='shopping_cart_count()'>加入购物车</button></td>";
-        document.getElementById("table_body").appendChild(trObj);//appendChild()方法向节点添加最后一个子节点.
+        $("tbody#table_body").append("<tr><td>" + goods_info[i].type + "</td><td>" + goods_info[i].name + "</td><td>" + goods_info[i].count + "</td><td>" + goods_info[i].unit + "</td><td><button class='button_style' onclick='shopping_cart_count()'>加入购物车</button></td></tr>");
     }
 }
+
