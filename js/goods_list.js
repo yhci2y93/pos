@@ -5,6 +5,7 @@ $(document).ready(function(){
     show_shopping_cart_initial();
     binding_goods_list_jump_function();
     add_goods_info_rows();
+    $("#hide").hide();
 })
 
 function show_shopping_cart_initial(){
@@ -33,7 +34,21 @@ function add_button_jump_event(id_name,file_name)
     });
 }
 
-function add_goods_info_rows() {
+function add_goods_info_rows(){
+    var goods_info = [
+        {barcode:"000", type: '饮料', name: '可口可乐', price: '3', unit: '瓶'},
+        {barcode:"001", type: '饮料', name: '雪碧', price: '3', unit: '瓶'},
+        {barcode:"002", type: '水果', name: '苹果', price: '5.5', unit: '斤'},
+        {barcode:"003", type: '水果', name: '荔枝', price: '15', unit: '斤'},
+        {barcode:"004", type: '生活用品', name: '电池', price: '2', unit: '个'},
+        {barcode:"005", type: '食品', name: '方便面', price: '4.5', unit: '袋'}];
+    var get_string=$("#table_body").html();
+    for(var i = 0; i < goods_info.length; i++){
+        var replace=get_string.replace(/type/,goods_info[i].type).replace(/name/,goods_info[i].name).replace(/price/,goods_info[i].price).replace(/unit/,goods_info[i].unit).replace(/button/,"<button  class='button_style' onclick='show_shopping_cart_count()' id="+goods_info[i].barcode+">加入购物车</button>");
+        $("#table_body").append(replace);
+    }
+}
+/*function add_goods_info_rows() {
     var goods_info = [
         {barcode:"000", type: '饮料', name: '可口可乐', count: '3', unit: '瓶'},
         {barcode:"001", type: '饮料', name: '雪碧', count: '3', unit: '瓶'},
@@ -44,7 +59,15 @@ function add_goods_info_rows() {
     for (var i = 0; i < goods_info.length; i++) {
         //var i=JSON.stringify(goods_info[i]);
         //localStorage(goods_info[i].barcode,i);
-        $("tbody#table_body").append("<tr><td>" + goods_info[i].type + "</td><td>" + goods_info[i].name + "</td><td>" + goods_info[i].count + "</td><td>" + goods_info[i].unit + "</td><td><button  class='button_style' onclick='show_shopping_cart_count()' id="+goods_info[i].barcode+">加入购物车</button></td></tr>");
+        var rows="<tr>"
+        rows+="<td>" + goods_info[i].type + "</td>";
+        rows+="<td>" + goods_info[i].name + "</td>";
+        rows+="<td>" + goods_info[i].count + "</td>";
+        rows+="<td>" + goods_info[i].unit + "</td>";
+        rows+="<td><button  class='button_style' onclick='show_shopping_cart_count()' id="+goods_info[i].barcode+">加入购物车</button></td>";
+        rows+="</tr>"
+        $("#table_body").append(rows);
+        //$("#table_body").append("<tr><td>" + goods_info[i].type + "</td><td>" + goods_info[i].name + "</td><td>" + goods_info[i].price + "</td><td>" + goods_info[i].unit + "</td><td><button  class='button_style' onclick='show_shopping_cart_count()' id="+goods_info[i].barcode+">加入购物车</button></td></tr>");
     }
-}
+}*/
 
