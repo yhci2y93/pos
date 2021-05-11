@@ -32,7 +32,7 @@ body {
     width: 25px;
     vertical-align: middle;/*图片垂直居中*/
 }
-#shopping_cart{
+#shopping_cart_num{
     display: inline;/*div并列*/
 }
 .main{
@@ -43,9 +43,65 @@ body {
     margin: 30px 65px;
     border-width: 1px;
 }
+.title_style{
+    background-color: rgba(204, 204, 204, 0.22);
+    height:60px;
+
+}
+.title{
+    font-size: 20px;
+    margin-top: 0;
+    margin-bottom: 0;
+    height:50%;
+    padding-top: 20px;
+    padding-left: 40px;
+    font-weight: 700;
+}
 .title_bottom{
     border-style: solid none none none;
     border-color: #cccccc;
     width:1170px;
     border-width: 1px;
+}
+table {
+    border-collapse:collapse;/*表格合并成单一表格*/
+    margin: 20px 20px 40px 20px;
+}
+table,th, td {
+    border: 1px solid #cccccc;
+}
+.attribute_height{/*属性*/
+    height:40px;
+}
+.table_th_classify_and_unit{
+    width:100px;
+}
+.table_th_name_and_price{
+    width:200px;
+}
+.table_th_number_and_subtotal{
+    width:285px;
+}
+td{
+    height:40px;
+    text-align: center;
+    vertical-align: top;
+    padding-top: 15px;
+}
+.total_style{
+    margin-left: 1050px;
+}
+/*#total{*/
+    /*display: inline;/!*div并列*!/*/
+/*}*/
+.pay_button{
+    background-color:#0477CA;
+    color:	#FFFFFF;
+    border-radius: 4px;
+    font-size:15px;
+    width:60px;
+    height:30px;
+    border:0;
+    margin-left: 1080px;
+    margin-bottom: 20px;
 }

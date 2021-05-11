@@ -15,16 +15,35 @@
         <button class="button" id="goods_list">商品列表</button>
     </div>
     <div class="shopping_cart_label">
-        <button class="button index_label_color" onclick="{location.href='shopping_cart.html'}"><img src="99.png" class="img" />购物车(<div id="shopping_cart"></div>)</button>
+        <button class="button index_label_color"><img src="99.png" class="img" />购物车(<div id="shopping_cart_num"></div>)</button>
     </div>
 </div>
 <div class="main">
-    <div >
-        <p >购物清单</p>
+    <div class="title_style">
+        <p class="title">购物清单</p>
     </div>
     <div class="title_bottom">
-
-    </div>
+        <table>
+            <tr class="attribute_height">
+                <th class="table_th_classify_and_unit">分类</th>
+                <th class="table_th_name_and_price">名称</th>
+                <th class="table_th_name_and_price">单价(元)</th>
+                <th class="table_th_classify_and_unit">单位</th>
+                <th class="table_th_number_and_subtotal">数量</th>
+                <th class="table_th_number_and_subtotal">小计</th>
+            </tr>
+            <tr>
+                <td>饮料</td>
+                <td>饮料</td>
+                <td>饮料</td>
+                <td>饮料</td>
+                <td>饮料</td>
+                <td>饮料</td>
+            </tr>
+        </table>
+        </div>
+    <p class="total_style">总计:<span id="total"></span>元</p>
+    <button class="pay_button">付款</button>
 </div>
 </body>
 </html>

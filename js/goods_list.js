@@ -6,6 +6,7 @@ $(document).ready(function(){
     get_goods_list_jump_function();
     add_rows();
 })
+
 function check_shopping_cart_null(){
     if (localStorage.getItem("num") == null) { localStorage.setItem("num", 0);}//判断开始是否有数.
     var number = localStorage.getItem("num");

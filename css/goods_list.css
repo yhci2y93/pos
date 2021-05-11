@@ -33,9 +33,6 @@ body {
     width: 25px;
     vertical-align: middle;/*图片垂直居中*/
 }
-#shopping_cart_num{
-    display: inline;/*div并列*/
-}
 .main{
     border-radius:5px;
     border-style: solid;
