@@ -5,7 +5,6 @@ $(document).ready(function(){
     show_shopping_cart_initial();
     binding_goods_list_jump_function();
     add_goods_info_rows();
-    $("#hide").hide();
 })
 
 function show_shopping_cart_initial(){
@@ -13,13 +12,14 @@ function show_shopping_cart_initial(){
     $("#shopping_cart_num").text(number);
 }
 
-function show_shopping_cart_count(){
-    var number = $("#shopping_cart_num").text();
-    number = parseInt(number) + 1;
-    localStorage.setItem("num", number);
-    $("#shopping_cart_num").text(number);
-
-}
+$(document).ready(function(){
+    $(".button_style").click(function(){
+        var number = $("#shopping_cart_num").text();
+        number = parseInt(number) + 1;
+        localStorage.setItem("num", number);
+        $("#shopping_cart_num").text(number);
+    });
+});
 
 function binding_goods_list_jump_function() {
     add_button_jump_event("lets_label","goods_list.html");
@@ -42,9 +42,13 @@ function add_goods_info_rows(){
         {barcode:"003", type: '水果', name: '荔枝', price: '15', unit: '斤'},
         {barcode:"004", type: '生活用品', name: '电池', price: '2', unit: '个'},
         {barcode:"005", type: '食品', name: '方便面', price: '4.5', unit: '袋'}];
-    var get_string=$("#table_body").html();
+    var get_string=$("#get_rows").text();
     for(var i = 0; i < goods_info.length; i++){
-        var replace=get_string.replace(/type/,goods_info[i].type).replace(/name/,goods_info[i].name).replace(/price/,goods_info[i].price).replace(/unit/,goods_info[i].unit).replace(/button/,"<button  class='button_style' onclick='show_shopping_cart_count()' id="+goods_info[i].barcode+">加入购物车</button>");
+        var replace=get_string.replace(/type/,goods_info[i].type)
+            .replace(/name/,goods_info[i].name)
+            .replace(/price/,goods_info[i].price)
+            .replace(/unit/,goods_info[i].unit)
+            .replace(/id_number/,goods_info[i].barcode);
         $("#table_body").append(replace);
     }
 }

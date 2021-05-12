@@ -6,6 +6,15 @@
     <link rel="stylesheet" href="css/goods_list.css">
     <script src="js/jquery-3.0.0.js"></script>
     <script src="js/goods_list.js"></script>
+    <script id="get_rows" type="text/html">//也可以用这个(x-tmpl-mustache)替换(text/html)
+        <tr>
+            <td>type</td>
+            <td>name</td>
+            <td>price</td>
+            <td>unit</td>
+            <td><button class='button_style' id="id_number">加入购物车</button></td>
+        </tr>
+    </script>
 </head>
 <body>
 <div>
@@ -32,17 +41,9 @@
                 <th class="table_th_button">  </th>
             </tr>
             <tbody id="table_body">
-            <tr id="hide">
-                <td>type</td>
-                <td>name</td>
-                <td>price</td>
-                <td>unit</td>
-                <td>button</td>
-            </tr>
             </tbody>
         </table>
     </div>
 </div>
-
 </body>
 </html>
