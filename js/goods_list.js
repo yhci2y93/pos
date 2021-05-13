@@ -21,26 +21,20 @@ function show_shopping_cart_initial(){
 }
 
 function bind_count_and_setltem_function(goods_info){
-    show_shopping_cart_count(goods_info[0].barcode,goods_info[0]);
-    show_shopping_cart_count(goods_info[1].barcode,goods_info[1]);
-    show_shopping_cart_count(goods_info[2].barcode,goods_info[2]);
-    show_shopping_cart_count(goods_info[3].barcode,goods_info[3]);
-    show_shopping_cart_count(goods_info[4].barcode,goods_info[4]);
-    show_shopping_cart_count(goods_info[5].barcode,goods_info[5]);
+    for(var i=0;i<goods_info.length;i++){
+        show_shopping_cart_count(goods_info[i].barcode,goods_info[i]);
+    }
 }
+var goods=[];
 function show_shopping_cart_count(id,goods_info){
-    var goods=[];
-    var num=0;
     $("#"+id+"").click(function(){
         var number = $("#shopping_cart_num").text();
         number = parseInt(number) + 1;
         localStorage.setItem("num", number);
         $("#shopping_cart_num").text(number);
-        goods_info.count=++num;
-        localStorage.setItem(id,JSON.stringify(goods_info));
-        goods.push(goods_info)
+        goods.push(goods_info);
+        localStorage.setItem("goods_info",JSON.stringify(goods));
     });
-    alert(JSON.stringify(goods_info))
 }
 /*function show_shopping_cart_count(goods_info){
     var barcode=[];
