@@ -6,18 +6,18 @@
     <link rel="stylesheet" href="css/shopping_cart.css">
     <script src="js/jquery-3.0.0.js"></script>
     <script src="js/shopping_cart.js"></script>
-    <script id="kk" type="text/html">
+    <script id="get_rows" type="text/html">
         <tr>
             <td>type</td>
             <td>name</td>
             <td>price</td>
             <td>unit</td>
             <td>
-                <!--<div class="button_frame">
-                    <button id="dec_goods_num" class="dec_and_add_button_border_left dec_button">-</button>
-                    <span id="show_goods_num"></span>
-                    <button id="add_goods_num" class="dec_and_add_button_border_left add_button">+</button>
-                </div>-->
+                <div class="button_frame">
+                    <button id="dec_goods_num_id" class="dec_and_add_button_border_left dec_button">-</button>
+                    <span id="show_goods_num_id"></span>
+                    <button id="add_goods_num_id" class="dec_and_add_button_border_left add_button">+</button>
+                </div>
             </td>
             <td>subtotal</td>
         </tr>
@@ -48,7 +48,9 @@
                 <th class="table_th_number_and_subtotal">数量</th>
                 <th class="table_th_number_and_subtotal">小计</th>
             </tr>
-            <tr>
+            <tbody id="table_body">
+            </tbody>
+            <!--<tr>
                 <td>饮料</td>
                 <td>可口可乐</td>
                 <td>3</td>
@@ -60,7 +62,7 @@
                         <button id="add_goods_num" class="dec_and_add_button_border_left add_button">+</button>
                     </div>
                 </td>
-                <td>小计</td>
+                <td>小计</td>-->
             </tr>
         </table>
         </div>

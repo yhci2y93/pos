@@ -13,6 +13,7 @@ $(document).ready(function(){
     bind_goods_list_jump_function();
     add_goods_info_rows(goods_info);
     bind_count_and_setltem_function(goods_info)
+    //localStorage.setItem("goods_info","i")
 })
 
 function show_shopping_cart_initial(){
