@@ -13,7 +13,6 @@ $(document).ready(function(){
     bind_goods_list_jump_function();
     add_goods_info_rows(goods_info);
     bind_count_and_setltem_function(goods_info)
-    //localStorage.setItem("goods_info","i")
 })
 
 function show_shopping_cart_initial(){
@@ -26,14 +25,23 @@ function bind_count_and_setltem_function(goods_info){
         show_shopping_cart_count(goods_info[i].barcode,goods_info[i]);
     }
 }
-var goods=[];
+
+
 function show_shopping_cart_count(id,goods_info){
     $("#"+id+"").click(function(){
         var number = $("#shopping_cart_num").text();
         number = parseInt(number) + 1;
         localStorage.setItem("num", number);
         $("#shopping_cart_num").text(number);
+        var goods=[];
         goods.push(goods_info);
+        if(JSON.parse(localStorage.getItem("goods_info")) !=null){
+            goods=goods.concat(JSON.parse(localStorage.getItem("goods_info")));
+        }
+        //console.log(goods)
+        goods.sort(function(a,b){
+            return a.barcode> b.barcode?1:-1;
+        });
         localStorage.setItem("goods_info",JSON.stringify(goods));
     });
 }
