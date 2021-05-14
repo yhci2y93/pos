@@ -46,18 +46,27 @@ function add_goods_info_rows(goods_info){
             .replace(/name/,goods_info[i].name)
             .replace(/price/,goods_info[i].price)
             .replace(/unit/,goods_info[i].unit)
-            .replace(/dec_goods_num_id/,'dec'+goods_info[i].barcode).replace(/show_goods_num_id/,goods_info[i].barcode)
-            .replace(/add_goods_num_id/,'add'+goods_info[i].barcode);
+            .replace(/dec_goods_num_id/,'dec'+goods_info[i].barcode)
+            .replace(/show_goods_num_id/,goods_info[i].barcode)
+            .replace(/add_goods_num_id/,'add'+goods_info[i].barcode)
+            .replace(/tr_id/,'tr'+goods_info[i].barcode);
         $("#table_body").append(replace);
-        barcode.push(goods_info[i].barcode);
-        localStorage.setItem("barcode",JSON.stringify(barcode));
     }
 }
 
-/*function del_goods_info_row(){
-    var row_num=$("#table_body").filter("#table_body").size();
-    alert(row_num)
-}*/
+function del_goods_info_row(barcode){
+    var goods_info=JSON.parse(localStorage.getItem("goods_info"));
+    for(var i=0;i<goods_info.length;i++){
+        if(goods_info[i].barcode==barcode){
+            goods_info.splice(i,1);
+        }
+    }
+    localStorage.setItem("goods_info",JSON.stringify(goods_info));
+    $("#tr"+barcode+"").remove();
+    if(goods_info.length==0){
+        window.location.href = "goods_list.html";
+    }
+}
 
 function show_shopping_cart_initial(){
     var number = localStorage.getItem("num")||0;
@@ -65,35 +74,43 @@ function show_shopping_cart_initial(){
 }
 
 function show_goods_number(item_info){
-    var barcode=JSON.parse(localStorage.getItem("barcode"));
-    for(var i=0;i<barcode.length;i++){
-        localStorage.setItem(barcode[i],item_info[i].count);
-        var number = localStorage.getItem(barcode[i])
-        $("#"+barcode[i]+"").text(number);
-        show_goods_num(barcode[i])
+    for(var i=0;i<item_info.length;i++){
+        $("#"+item_info[i].barcode+"").text(item_info[i].count);
+        show_goods_num(item_info,item_info[i].barcode)
     }
 }
 
-function show_goods_num(barcode){
+function show_goods_num(item_info,barcode){
     $("#add"+barcode+"").click(function(){
-        var num = $("#"+barcode+"").text();
-        num = parseInt(num) + 1;
-        localStorage.setItem(barcode, num);
-        $("#"+barcode+"").text(num);
-        var number=parseInt($("#shopping_cart_num").text())+1;
-        $("#shopping_cart_num").text(number);
+        for(var i=0;i<item_info.length;i++){
+            if(item_info[i].barcode==barcode){
+                item_info[i].count++;
+                localStorage.setItem("goods_info",JSON.stringify(item_info));
+                $("#"+barcode+"").text(item_info[i].count);
+                var number=parseInt($("#shopping_cart_num").text())+1;
+                localStorage.setItem("num",number);
+                $("#shopping_cart_num").text(number);
+            }
+        }
     });
     $("#dec"+barcode+"").click(function(){
-        var num = $("#"+barcode+"").text();
-        num = parseInt(num) - 1;
-        if(num>=0){
-            localStorage.setItem(barcode, num);
-            $("#"+barcode+"").text(num);
-            var number=parseInt($("#shopping_cart_num").text())-1;
-            $("#shopping_cart_num").text(number);
-        }else{
-            //del_goods_info_row();
-            //window.location.href = "goods_list.html";
+        for(var i=0;i<item_info.length;i++) {
+            if (item_info[i].barcode == barcode) {
+                item_info[i].count--;
+                if(num>0){
+                    localStorage.setItem("goods_info",JSON.stringify(item_info));
+                    $("#"+barcode+"").text(item_info[i].count);
+                    var number=parseInt($("#shopping_cart_num").text())-1;
+                    localStorage.setItem("num",number);
+                    $("#shopping_cart_num").text(number);
+                }else{
+                    localStorage.setItem(barcode, num)
+                    number=parseInt($("#shopping_cart_num").text())-1;
+                    localStorage.setItem("num",number);
+                    $("#shopping_cart_num").text(number);
+                    del_goods_info_row(barcode);
+                }
+            }
         }
     });
 }
