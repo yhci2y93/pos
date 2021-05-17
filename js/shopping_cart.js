@@ -40,33 +40,6 @@ function get_goods_info(goods_info,goods_count){
     return item_info;
 }
 
-/*function subtotal(item_info){
-    var total=0;
-    var save_total=0;
-    var discount_subtotal=0;
-    for(var i=0;i<item_info.length;i++){
-        var goods_info=JSON.parse(localStorage.getItem("goods_info"));
-       if(localStorage.getItem(item_info[i].barcode)<3){
-           var subtotal=item_info[i].price*localStorage.getItem(item_info[i].barcode);
-           $("#subtotal"+item_info[i].barcode+"").text(subtotal);
-       }else{
-           subtotal=item_info[i].price*localStorage.getItem(item_info[i].barcode);
-           discount_subtotal=item_info[i].price*(localStorage.getItem(item_info[i].barcode)-
-               Math.floor(localStorage.getItem(item_info[i].barcode)/3));
-           save_total+=subtotal-discount_subtotal;
-           $("#subtotal"+item_info[i].barcode+"").text(discount_subtotal+'(原价：'+subtotal+'元)');
-       }
-        goods_info[i].count=localStorage.getItem(item_info[i].barcode);
-        goods_info[i].subtotal=subtotal;
-        goods_info[i].discount_subtotal=discount_subtotal;
-        total+=subtotal;
-    }
-    console.log(JSON.stringify(goods_info));
-    $("#total").text(total.toFixed(2));
-    localStorage.setItem("pay_info",JSON.stringify(goods_info));
-    localStorage.setItem("total",total);
-    localStorage.setItem("save_total",save_total);
-}*/
 function subtotal(item_info){
     var total=0;
     var save_total=0;
@@ -95,14 +68,13 @@ function subtotal(item_info){
 
 function add_goods_info_rows(goods_info){
     var get_string=$("#get_rows").text();
-    var barcode=[];
     for(var i = 0; i < goods_info.length; i++){
         var replace=get_string.replace(/type/,goods_info[i].type)
             .replace(/name/,goods_info[i].name)
             .replace(/price/,goods_info[i].price)
             .replace(/unit/,goods_info[i].unit)
             .replace(/dec_goods_num_id/,'dec'+goods_info[i].barcode)
-            .replace(/show_goods_num_id/,goods_info[i].barcode)
+            .replace(/goods_num_id/,goods_info[i].barcode)
             .replace(/add_goods_num_id/,'add'+goods_info[i].barcode)
             .replace(/tr_id/,'tr'+goods_info[i].barcode)
             .replace(/subtotal_id/,'subtotal'+goods_info[i].barcode);
@@ -127,7 +99,7 @@ function del_goods_info_row(barcode,item_info){
     localStorage.setItem("goods_info",JSON.stringify(goods_info));
     localStorage.setItem("barcode",JSON.stringify(barcodes));
     localStorage.setItem("pay_info",JSON.stringify(pay_info));
-    $("#tr"+barcode+"").remove();
+    $("#tr"+barcode).remove();
     if(goods_info.length==0){
         window.location.href = "goods_list.html";
     }
@@ -142,44 +114,67 @@ function show_goods_number(item_info){
     var barcode=JSON.parse(localStorage.getItem("barcode"));
     for(var i=0;i<barcode.length;i++){
         if(localStorage.getItem(barcode[i])){
-            $("#"+barcode[i]+"").text(localStorage.getItem(barcode[i]));
+            $("#"+barcode[i]).text(localStorage.getItem(barcode[i]));
         }else{
-            $("#"+barcode[i]+"").text(item_info[i].count);
+            $("#"+barcode[i]).text(item_info[i].count);
             localStorage.setItem(barcode[i],item_info[i].count);
         }
-        show_goods_num(barcode[i],item_info);
+        bind_goods_add_button_function(barcode[i],item_info);
+        bind_goods_dec_button_function(barcode[i],item_info);
     }
 }
 
-function show_goods_num(barcode,item_info){
-    $("#add"+barcode+"").click(function(){
-        var num=$("#"+barcode).text();
-        num=parseInt(num)+1;
-        $("#"+barcode+"").text(num);
-        localStorage.setItem(barcode,num);
-        var number=parseInt($("#shopping_cart_num").text())+1;
-        localStorage.setItem("num",number);
-        $("#shopping_cart_num").text(number);
+function bind_goods_add_button_function(barcode,item_info){
+    $("#add"+barcode).click(function(){
+        var num=add_num(barcode);
+        var number=add_shopping_cart_num();
         subtotal(item_info);
+        show_goods_num(barcode,num)
+        show_shopping_cart_num(number)
     });
-    $("#dec"+barcode+"").click(function(){
-        var num=localStorage.getItem(barcode);
-        num=parseInt(num)-1;
-        if(num>0){
-            localStorage.setItem(barcode,num);
-            $("#"+barcode+"").text(num);
-            var number=parseInt($("#shopping_cart_num").text())-1;
-            localStorage.setItem("num",number);
-            $("#shopping_cart_num").text(number);
-            subtotal(item_info);
-        }else{
-            localStorage.setItem(barcode,num);
-            number=parseInt($("#shopping_cart_num").text())-1;
-            localStorage.setItem("num",number);
-            $("#shopping_cart_num").text(number);
+}
+
+function bind_goods_dec_button_function(barcode,item_info){
+    $("#dec"+barcode).click(function(){
+        var num=dec_num(barcode,item_info);
+        var number=dec_shopping_cart_number();
+        subtotal(item_info);
+        if(num>0){ show_goods_num(barcode,num);
+        } else{
             del_goods_info_row(barcode,item_info);
         }
+        show_shopping_cart_num(number);
     });
+}
+
+function add_num(barcode){
+    var num=parseInt($("#"+barcode).text())+1;
+    return num;
+}
+
+function dec_num(barcode,item_info){
+    var num=parseInt($("#"+barcode).text())-1;
+    return num;
+}
+
+function show_goods_num(barcode,num){
+    $("#"+barcode).text(num);
+    localStorage.setItem(barcode,num);
+}
+
+function add_shopping_cart_num(){
+    var number=parseInt($("#shopping_cart_num").text())+1;
+    return number;
+}
+
+function dec_shopping_cart_number(){
+    var number=parseInt($("#shopping_cart_num").text())-1;
+    return number;
+}
+
+function show_shopping_cart_num(number){
+    localStorage.setItem("num",number);
+    $("#shopping_cart_num").text(number);
 }
 
 function get_goods_list_jump_function() {
@@ -189,9 +184,8 @@ function get_goods_list_jump_function() {
     add_button_event("pay","pay_info_confirm.html");
 }
 
-function add_button_event(id_name,file_name)
-{
-    $("button#"+id_name+"").click(function(){
+function add_button_event(id_name,file_name) {
+    $("button#"+id_name).click(function(){
         window.location.href = file_name;
     });
 }
