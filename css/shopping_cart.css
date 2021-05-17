@@ -73,14 +73,17 @@ table,th, td {
 .attribute_height{/*属性*/
     height:40px;
 }
-.table_th_type_and_unit{
+.th_small_box{
     width:100px;
 }
-.table_th_name_and_price{
+.th_centre_box{
     width:200px;
 }
-.table_th_number_and_subtotal{
-    width:285px;
+.th_big_box{
+    width:270px;
+}
+.th_greater_box{
+    width:300px;
 }
 td{
     height:50px;
