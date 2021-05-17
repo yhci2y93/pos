@@ -117,24 +117,17 @@ td{
 .dec_button{
     border-radius:5px 0 0 5px;
     float:left;
-    width: 50px;
-    height: 30px;
-    background-color: #FFFFFF ;
-    border: 0;
-    padding: 0;
 }
 .add_button{
     border-radius:0 5px 5px 0;
     float:right;
-    width: 50px;
-    height: 30px;
-    background-color: #FFFFFF ;
-    border: 0;
-    padding: 0;
-
 }
-.dec_and_add_button_border_left{
+.button_border{
     border-style: solid ;
     border-color: #cccccc;
     border-width: 1px;
+    width: 50px;
+    height: 30px;
+    background-color: #FFFFFF ;
+    padding: 0;
 }

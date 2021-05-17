@@ -40,7 +40,7 @@ function get_goods_info(goods_info,goods_count){
     return item_info;
 }
 
-function subtotal(item_info){
+/*function subtotal(item_info){
     var total=0;
     var save_total=0;
     var discount_subtotal=0;
@@ -57,13 +57,38 @@ function subtotal(item_info){
            $("#subtotal"+item_info[i].barcode+"").text(discount_subtotal+'(原价：'+subtotal+'元)');
        }
         goods_info[i].count=localStorage.getItem(item_info[i].barcode);
-        console.log(goods_info[i])
         goods_info[i].subtotal=subtotal;
         goods_info[i].discount_subtotal=discount_subtotal;
         total+=subtotal;
     }
+    console.log(JSON.stringify(goods_info));
     $("#total").text(total.toFixed(2));
     localStorage.setItem("pay_info",JSON.stringify(goods_info));
+    localStorage.setItem("total",total);
+    localStorage.setItem("save_total",save_total);
+}*/
+function subtotal(item_info){
+    var total=0;
+    var save_total=0;
+    var discount_subtotal=0;
+    for(var i=0;i<item_info.length;i++){
+        if(localStorage.getItem(item_info[i].barcode)<3){
+            var subtotal=item_info[i].price*localStorage.getItem(item_info[i].barcode);
+            $("#subtotal"+item_info[i].barcode+"").text(subtotal);
+        }else{
+            subtotal=item_info[i].price*localStorage.getItem(item_info[i].barcode);
+            discount_subtotal=item_info[i].price*(localStorage.getItem(item_info[i].barcode)-
+                Math.floor(localStorage.getItem(item_info[i].barcode)/3));
+            save_total+=subtotal-discount_subtotal;
+            $("#subtotal"+item_info[i].barcode+"").text(discount_subtotal+'(原价：'+subtotal+'元)');
+        }
+        item_info[i].count=localStorage.getItem(item_info[i].barcode);
+        item_info[i].subtotal=subtotal;
+        item_info[i].discount_subtotal=discount_subtotal;
+        total+=subtotal;
+    }
+    $("#total").text(total.toFixed(2));
+    localStorage.setItem("pay_info",JSON.stringify(item_info));
     localStorage.setItem("total",total);
     localStorage.setItem("save_total",save_total);
 }
@@ -86,7 +111,6 @@ function add_goods_info_rows(goods_info){
 }
 
 function del_goods_info_row(barcode,item_info){
-    subtotal(item_info);
     var goods_info=JSON.parse(localStorage.getItem("goods_info"));
     var barcodes=JSON.parse((localStorage.getItem("barcode")));
     var pay_info=JSON.parse(localStorage.getItem("pay_info"))
@@ -96,8 +120,10 @@ function del_goods_info_row(barcode,item_info){
             goods_info.splice(i,1);
             barcodes.splice(i,1);
             pay_info.splice(i,1);
+            item_info.splice(i,1);
         }
     }
+    subtotal(item_info);
     localStorage.setItem("goods_info",JSON.stringify(goods_info));
     localStorage.setItem("barcode",JSON.stringify(barcodes));
     localStorage.setItem("pay_info",JSON.stringify(pay_info));
@@ -127,7 +153,7 @@ function show_goods_number(item_info){
 
 function show_goods_num(barcode,item_info){
     $("#add"+barcode+"").click(function(){
-        var num=$("#"+barcode+"").text();
+        var num=$("#"+barcode).text();
         num=parseInt(num)+1;
         $("#"+barcode+"").text(num);
         localStorage.setItem(barcode,num);
@@ -159,7 +185,8 @@ function show_goods_num(barcode,item_info){
 function get_goods_list_jump_function() {
     add_button_event("lets_label","goods_list.html");
     add_button_event("index","index.html");
-    add_button_event("goods_list","goods_list.html")
+    add_button_event("goods_list","goods_list.html");
+    add_button_event("pay","pay_info_confirm.html");
 }
 
 function add_button_event(id_name,file_name)
