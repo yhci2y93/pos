@@ -1,24 +1,17 @@
 /**
  * Created by lenovo on 16-7-11.
  */
-function get_element_text_by_id(id){
-    return $("#"+id).text()
-}
-function set_element_text_by_id(id,text){
-    $("#"+id).text(text)
-}
 $(document).ready(function(){
-    var goods_info=JSON.parse(localStorage.getItem("goods_info"));
-    var barcode=JSON.parse(localStorage.getItem("barcode"))
-    add_goods_info_rows(goods_info,barcode);
+    var goods_info=getItem_local("goods_info");
+    var barcode=getItem_local("barcode")
+    add_goods_info_rows(barcode,goods_info);
     show_shopping_cart_initial();
-    show_goods_initial_number(goods_info,barcode);
+    show_goods_initial_number(barcode,goods_info);
     get_goods_list_jump_function();
-    subtotal();
 })
 
-function add_goods_info_rows(goods_info,barcode){
-    var get_string=$("#get_rows").text();
+function add_goods_info_rows(barcode,goods_info){
+    var get_string=get_element_text_by_id("get_rows");
     _.each(barcode,function(id){
         var replace=get_string.replace(/type/,goods_info[id].type)
             .replace(/name/,goods_info[id].name)
@@ -38,7 +31,6 @@ function show_shopping_cart_initial(){
     set_element_text_by_id("shopping_cart_num",number);
 }
 
-
 function get_goods_list_jump_function() {
     add_button_event("lets_label","goods_list.html");
     add_button_event("index","index.html");
@@ -52,9 +44,11 @@ function add_button_event(id_name,file_name) {
     });
 }
 
-function show_goods_initial_number(goods_info,barcode){
+function show_goods_initial_number(barcode,goods_info){
     _.each(barcode,function(id){
         set_element_text_by_id(id,goods_info[id].count);
+        show_subtotal(id);
+        show_total();
         bind_goods_add_button_function(id,goods_info)
         bind_goods_dec_button_function(id,goods_info);
     })
@@ -64,25 +58,26 @@ function bind_goods_add_button_function(id,goods_info){
     $("#add"+id).click(function(){
         var num=parseInt(get_element_text_by_id(id))+1;
         set_element_text_by_id(id,num);
+        replace_goods_info(id,goods_info,num);
         var number=parseInt(get_element_text_by_id("shopping_cart_num"))+1;
         set_element_text_by_id("shopping_cart_num",number);
-        //subtotal(item_info);
-        replace_goods_info(id,goods_info,num);
+        save_localstoage("num",number)
+        if(num>=3) discount_subtotal(id,goods_info,num);
+        subtotal(id,goods_info,num);
     });
 }
 
-function bind_goods_dec_button_function(id,goods_info){//有待改进；
+function bind_goods_dec_button_function(id,goods_info){
     $("#dec"+id).click(function(){
         var num= parseInt(get_element_text_by_id(id))-1;
-        if(num>0){
-            set_element_text_by_id(id,num);
-            replace_goods_info(id,goods_info,num);
-        } else{
-            //del_goods_info_row(barcode,item_info);
-        }
-        //subtotal(item_info);
+        set_element_text_by_id(id,num);
+        replace_goods_info(id,goods_info,num);
         var number=parseInt(get_element_text_by_id("shopping_cart_num"))-1;
         set_element_text_by_id("shopping_cart_num",number);
+        save_localstoage("num",number)
+        if(num>=3) discount_subtotal(id,goods_info,num);
+        subtotal(id,goods_info,num);
+        if(num==0) del_goods_info_row(id,goods_info);
     });
 }
 
@@ -91,24 +86,66 @@ function replace_goods_info(id,goods_info,num){
     save_localstoage("goods_info",goods_info);
 }
 
+function del_goods_info_row(id,goods_info){
+    goods_info[id]=undefined;
+    save_localstoage("goods_info",goods_info);
+    $("#tr"+id).remove();
+    jump_goods_info(id);
+}
+function jump_goods_info(id){
+    var barcode=JSON.parse(localStorage.getItem("barcode"));
+    for(var i=0;i<barcode.length;i++)
+        if(barcode[i]==id) barcode.splice(i,1);
+    save_localstoage("barcode",barcode);
+    if(barcode.length==0) window.location.href = "goods_list.html";
+}
+
+function show_subtotal(id){
+    var goods_info=getItem_local("goods_info");
+    goods_info[id].count<3 ? set_element_text_by_id('subtotal'+id,goods_info[id].subtotal) :
+        set_element_text_by_id('subtotal'+id,goods_info[id].subtotal-goods_info[id].discount_subtotal+'(原价：'+goods_info[id].subtotal+'元)');
+}
+
+function subtotal(id,goods_info,num){
+    total(id,goods_info,num);
+    goods_info[id].subtotal=goods_info[id].price*num;
+    save_localstoage("goods_info",goods_info);
+    show_subtotal(id);
+}
+
+function discount_subtotal(id,goods_info,num){
+    goods_info[id].discount_subtotal=goods_info[id].price*Math.floor(num/3);
+    save_localstoage("goods_info",goods_info);
+}
+
+function show_total(){
+    var total=getItem_local("total")
+    set_element_text_by_id("total",total)
+}
+
+function total(id,goods_info,num){
+    var total=getItem_local("total")
+    total=total-goods_info[id].subtotal+goods_info[id].price*num;
+    save_localstoage("total",total);
+    show_total();
+}
+
+function get_element_text_by_id(id){
+    return $("#"+id).text()
+}
+
+function set_element_text_by_id(id,text){
+    $("#"+id).text(text)
+}
+
+function getItem_local(id){
+    return JSON.parse(localStorage.getItem(id));
+}
+
 function save_localstoage(key, value){
-    console.log(JSON.stringify(value))
     localStorage.setItem(key,JSON.stringify(value));
 }
-
-function show_goods_num(barcode,num){
-    $("#"+barcode).text(num);
-    localStorage.setItem(barcode,num);
-}
-
-
-
-function show_shopping_cart_num(number){
-    localStorage.setItem("num",number);
-    $("#shopping_cart_num").text(number);
-}
-
-function subtotal(item_info){
+/*function subtotal(item_info){
     var total=0;
     var save_total=0;
     var discount_subtotal=0;
@@ -132,31 +169,30 @@ function subtotal(item_info){
     localStorage.setItem("pay_info",JSON.stringify(item_info));
     localStorage.setItem("total",total);
     localStorage.setItem("save_total",save_total);
-}
+}*/
 
-function del_goods_info_row(barcode,item_info){
-    var goods_info=JSON.parse(localStorage.getItem("goods_info"));
-    var barcodes=JSON.parse((localStorage.getItem("barcode")));
-    var pay_info=JSON.parse(localStorage.getItem("pay_info"))
-    localStorage.removeItem(barcode);
-    for(var i=0;i<goods_info.length;i++){
-        if(goods_info[i].barcode==barcode){
-            goods_info.splice(i,1);
-            barcodes.splice(i,1);
-            pay_info.splice(i,1);
-            item_info.splice(i,1);
-        }
-    }
-    subtotal(item_info);
-    localStorage.setItem("goods_info",JSON.stringify(goods_info));
-    localStorage.setItem("barcode",JSON.stringify(barcodes));
-    localStorage.setItem("pay_info",JSON.stringify(pay_info));
-    $("#tr"+barcode).remove();
-    if(goods_info.length==0){
-        window.location.href = "goods_list.html";
-    }
-}
-
+/*function del_goods_info_row(barcode,item_info){
+ var goods_info=JSON.parse(localStorage.getItem("goods_info"));
+ var barcodes=JSON.parse((localStorage.getItem("barcode")));
+ var pay_info=JSON.parse(localStorage.getItem("pay_info"))
+ localStorage.removeItem(barcode);
+ for(var i=0;i<goods_info.length;i++){
+ if(goods_info[i].barcode==barcode){
+ goods_info.splice(i,1);
+ barcodes.splice(i,1);
+ pay_info.splice(i,1);
+ item_info.splice(i,1);
+ }
+ }
+ subtotal(item_info);
+ localStorage.setItem("goods_info",JSON.stringify(goods_info));
+ localStorage.setItem("barcode",JSON.stringify(barcodes));
+ localStorage.setItem("pay_info",JSON.stringify(pay_info));
+ $("#tr"+barcode).remove();
+ if(goods_info.length==0){
+ window.location.href = "goods_list.html";
+ }
+ }*/
 /*function add_goods_info_rows(goods_info,barcode){
  var get_string=$("#get_rows").text();
  for(var i = 0; i < barcode.length; i++){
