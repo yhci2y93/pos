@@ -26,25 +26,52 @@ function bind_count_and_setltem_function(goods_info){
     }
 }
 
-
 function show_shopping_cart_count(id,goods_info){
     $("#"+id+"").click(function(){
         var number = $("#shopping_cart_num").text();
         number = parseInt(number) + 1;
         localStorage.setItem("num", number);
         $("#shopping_cart_num").text(number);
-        var goods=[];
-        goods.push(goods_info);
-        if(JSON.parse(localStorage.getItem("goods_info")) !=null){
-            goods=goods.concat(JSON.parse(localStorage.getItem("goods_info")));
-        }
-        //console.log(goods)
-        goods.sort(function(a,b){
-            return a.barcode> b.barcode?1:-1;
-        });
-        localStorage.setItem("goods_info",JSON.stringify(goods));
+        localstorage_goods_info(id,goods_info);
     });
 }
+
+/*function localstorage_goods_info(id,goods_info){
+    if(localStorage.getItem(id)){
+        goods_info.count++;
+    } else{
+        goods_info.count=1;
+    }
+    localStorage.setItem(id,JSON.stringify(goods_info));
+}*/
+function localstorage_goods_info(id,goods_info){
+    var goods=JSON.parse(localStorage.getItem("goods_info")) || {};
+    var barcode=JSON.parse(localStorage.getItem("barcode")) || [];
+    if(goods[id]){
+        goods_info.count++;
+    } else{
+        goods_info.count=1;
+    }
+    if(barcode.indexOf(id)==-1){
+        barcode.push(id);
+    }
+    localStorage.setItem("barcode",JSON.stringify(barcode));
+    goods[id]=goods_info;
+    localStorage.setItem("goods_info",JSON.stringify(goods));
+}
+
+/*function localstorage_goods_info(goods_info){
+    var goods=[];
+    goods.push(goods_info);
+    if(JSON.parse(localStorage.getItem("goods_info")) !=null){
+        goods=goods.concat(JSON.parse(localStorage.getItem("goods_info")));
+    }
+    goods.sort(function(a,b){
+        return a.barcode> b.barcode?1:-1;
+    });
+    localStorage.setItem("goods_info",JSON.stringify(goods));
+}*/
+
 /*function show_shopping_cart_count(goods_info){
     var barcode=[];
     var goods=[];
