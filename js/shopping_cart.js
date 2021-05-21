@@ -3,16 +3,16 @@
  */
 $(document).ready(function(){
     var goods_info=getItem_local("goods_info");
-    var barcode=getItem_local("barcode")
-    add_goods_info_rows(barcode,goods_info);
+    var barcodes=getItem_local("barcode")
+    add_goods_info_rows(barcodes,goods_info);
     show_shopping_cart_initial();
-    show_goods_initial_number(barcode,goods_info);
+    show_goods_initial_number(barcodes,goods_info);
     get_goods_list_jump_function();
 })
 
-function add_goods_info_rows(barcode,goods_info){
-    var get_string=get_element_text_by_id("get_rows");
-    _.each(barcode,function(id){
+function add_goods_info_rows(barcodes,goods_info){
+    var get_string=get_element_text_by_id("td_row_template");
+    _.each(barcodes,function(id){
         var replace=get_string.replace(/type/,goods_info[id].type)
             .replace(/name/,goods_info[id].name)
             .replace(/price/,goods_info[id].price)
@@ -44,9 +44,9 @@ function add_button_event(id_name,file_name) {
     });
 }
 
-function show_goods_initial_number(barcode,goods_info){
+function show_goods_initial_number(barcodes,goods_info){
     var total=0;
-    _.each(barcode,function(id){
+    _.each(barcodes,function(id){
         set_element_text_by_id(id,goods_info[id].count);
         show_subtotal(id);
         total=initial_total(id,goods_info,total);
@@ -59,7 +59,7 @@ function show_goods_initial_number(barcode,goods_info){
 function bind_goods_add_button_function(id,goods_info){
     $("#add"+id).click(function(){
         var num=parseInt(get_element_text_by_id(id))+1;
-        execute_function(num,id,goods_info)
+        execute_function(num,id,goods_info);
         var number=parseInt(get_element_text_by_id("shopping_cart_num"))+1;
         show_shopping_cart_num(number);
     });
@@ -99,16 +99,16 @@ function del_goods_info_row(id,goods_info){
     jump_goods_info(id);
 }
 function jump_goods_info(id){
-    var barcode=JSON.parse(localStorage.getItem("barcode"));
-    for(var i=0;i<barcode.length;i++)
-        if(barcode[i]==id) barcode.splice(i,1);
-    save_localstoage("barcode",barcode);
-    if(barcode.length==0) window.location.href = "goods_list.html";
+    var barcodes=getItem_local("barcode");
+    for(var i=0;i<barcodes.length;i++)
+        if(barcodes[i]==id) barcodes.splice(i,1);
+    save_localstoage("barcode",barcodes);
+    if(barcodes.length==0) window.location.href = "goods_list.html";
 }
 
 function show_subtotal(id){
     var goods_info=getItem_local("goods_info");
-    goods_info[id].count<3 ? set_element_text_by_id('subtotal'+id,goods_info[id].subtotal) :
+    goods_info[id].count<3 ? set_element_text_by_id('subtotal'+id,goods_info[id].subtotal+"元") :
         set_element_text_by_id('subtotal'+id,goods_info[id].subtotal-goods_info[id].discount_subtotal+'(原价：'+goods_info[id].subtotal+'元)');
 }
 
@@ -123,6 +123,7 @@ function discount_subtotal(id,goods_info,num){
     goods_info[id].discount_subtotal=goods_info[id].price*Math.floor(num/3);
     save_localstoage("goods_info",goods_info);
 }
+
 function initial_total(id,goods_info,total){
     total+=JSON.parse(goods_info[id].subtotal);
     save_localstoage("total",total);
@@ -138,7 +139,7 @@ function total(id,goods_info,num){
 
 function show_total(){
     var total=getItem_local("total")
-    set_element_text_by_id("total",total)
+    set_element_text_by_id("total",total.toFixed(2))
 }
 
 function get_element_text_by_id(id){
