@@ -45,9 +45,11 @@ function add_button_event(id_name,file_name) {
 }
 
 function show_goods_initial_number(barcode,goods_info){
+    var total=0;
     _.each(barcode,function(id){
         set_element_text_by_id(id,goods_info[id].count);
         show_subtotal(id);
+        total=initial_total(id,goods_info,total);
         show_total();
         bind_goods_add_button_function(id,goods_info)
         bind_goods_dec_button_function(id,goods_info);
@@ -57,28 +59,32 @@ function show_goods_initial_number(barcode,goods_info){
 function bind_goods_add_button_function(id,goods_info){
     $("#add"+id).click(function(){
         var num=parseInt(get_element_text_by_id(id))+1;
-        set_element_text_by_id(id,num);
-        replace_goods_info(id,goods_info,num);
+        execute_function(num,id,goods_info)
         var number=parseInt(get_element_text_by_id("shopping_cart_num"))+1;
-        set_element_text_by_id("shopping_cart_num",number);
-        save_localstoage("num",number)
-        if(num>=3) discount_subtotal(id,goods_info,num);
-        subtotal(id,goods_info,num);
+        show_shopping_cart_num(number);
     });
 }
 
 function bind_goods_dec_button_function(id,goods_info){
     $("#dec"+id).click(function(){
         var num= parseInt(get_element_text_by_id(id))-1;
-        set_element_text_by_id(id,num);
-        replace_goods_info(id,goods_info,num);
+        execute_function(num,id,goods_info)
         var number=parseInt(get_element_text_by_id("shopping_cart_num"))-1;
-        set_element_text_by_id("shopping_cart_num",number);
-        save_localstoage("num",number)
-        if(num>=3) discount_subtotal(id,goods_info,num);
-        subtotal(id,goods_info,num);
+        show_shopping_cart_num(number);
         if(num==0) del_goods_info_row(id,goods_info);
     });
+}
+
+function show_shopping_cart_num(number){
+    set_element_text_by_id("shopping_cart_num",number);
+    save_localstoage("num",number)
+}
+
+function execute_function(num,id,goods_info){
+    set_element_text_by_id(id,num);
+    replace_goods_info(id,goods_info,num);
+    if(num>=3) discount_subtotal(id,goods_info,num);
+    subtotal(id,goods_info,num);
 }
 
 function replace_goods_info(id,goods_info,num){
@@ -117,10 +123,10 @@ function discount_subtotal(id,goods_info,num){
     goods_info[id].discount_subtotal=goods_info[id].price*Math.floor(num/3);
     save_localstoage("goods_info",goods_info);
 }
-
-function show_total(){
-    var total=getItem_local("total")
-    set_element_text_by_id("total",total)
+function initial_total(id,goods_info,total){
+    total+=JSON.parse(goods_info[id].subtotal);
+    save_localstoage("total",total);
+    return total;
 }
 
 function total(id,goods_info,num){
@@ -128,6 +134,11 @@ function total(id,goods_info,num){
     total=total-goods_info[id].subtotal+goods_info[id].price*num;
     save_localstoage("total",total);
     show_total();
+}
+
+function show_total(){
+    var total=getItem_local("total")
+    set_element_text_by_id("total",total)
 }
 
 function get_element_text_by_id(id){
@@ -163,6 +174,7 @@ function save_localstoage(key, value){
         item_info[i].count=localStorage.getItem(item_info[i].barcode);
         item_info[i].subtotal=subtotal;
         item_info[i].discount_subtotal=discount_subtotal;
+    } else{
         total+=subtotal;
     }
     $("#total").text(total.toFixed(2));
