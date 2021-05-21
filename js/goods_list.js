@@ -61,13 +61,10 @@ function localstorage_goods_info(id,goods_info){
     if(goods_info.count<3){
         goods_info.discount_subtotal=0;
     } else{
-        goods_info.discount_subtotal=goods_info.subtotal-goods_info.price*Math.floor(goods_info.count/3)
+        goods_info.discount_subtotal=goods_info.price*Math.floor(goods_info.count/3)
     }
-    var total=JSON.parse(localStorage.getItem("total"))||0;
-    total+=goods_info.subtotal;
     goods[id]=goods_info;
     localStorage.setItem("goods_info",JSON.stringify(goods));
-    localStorage.setItem("total",JSON.stringify(total));
 }
 
 /*function localstorage_goods_info(goods_info){
