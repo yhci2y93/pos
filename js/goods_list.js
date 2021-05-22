@@ -46,17 +46,11 @@ function show_shopping_cart_count(id,goods_info){
 }*/
 function localstorage_goods_info(id,goods_info){
     var goods=JSON.parse(localStorage.getItem("goods_info")) || {};
-    var barcode=JSON.parse(localStorage.getItem("barcode")) || [];
     if(goods[id]){
         goods_info.count++;
     } else{
         goods_info.count=1;
     }
-    if(barcode.indexOf(id)==-1){
-        barcode.push(id);
-    }
-    barcode.sort();
-    localStorage.setItem("barcode",JSON.stringify(barcode));
     goods_info.subtotal=goods_info.price*goods_info.count;
     if(goods_info.count<3){
         goods_info.discount_subtotal=0;
