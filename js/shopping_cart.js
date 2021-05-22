@@ -24,7 +24,7 @@ function add_goods_info_rows( goods_info) {
             .replace(/tr_id/, 'tr' + goods_info[id].barcode)
             .replace(/subtotal_id/, 'subtotal' + goods_info[id].barcode)//小计功能没有加载.replace(/subtotal/,subtotal(id));
         $("#table_body").append(replace);
-        subtotal(id);
+        subtotal(id,goods_info);
     })
 }
 
@@ -63,8 +63,6 @@ function bind_goods_button_function(id) {
 function replace_local_info(id, num) {
     show_goods_num(id, num);
     count_shopping_cart_num();
-    discount_subtotal(id);
-    subtotal(id);
     total();
     var goods_info=getitem_local("goods_info");
     if(goods_info[id].count==0) del_goods_info_row(id);
@@ -74,7 +72,7 @@ function show_goods_num(id, num){
     var goods_info=getitem_local("goods_info");
     goods_info[id].count += num;
     set_element_text_by_id(id,goods_info[id].count);
-    save_localstoage("goods_info", goods_info);
+    subtotal(id,goods_info);
 }
 
 function count_shopping_cart_num(){
@@ -92,7 +90,7 @@ function del_goods_info_row(id) {
     delete goods_info[id];//goods_info[id]=undefined;
     save_localstoage("goods_info", goods_info);
     $("#tr" + id).remove();
-    if (_.keys(goods_info).length == 0) window.location.href = "goods_list.html";
+    if (_.isEmpty(goods_info)) window.location.href = "goods_list.html";
 }
 
 function show_subtotal(id) {
@@ -104,18 +102,17 @@ function show_subtotal(id) {
     }
 }
 
-function subtotal(id) {
-    var goods_info=getitem_local("goods_info");
+function subtotal(id,goods_info) {
     goods_info[id].subtotal = goods_info[id].price *goods_info[id].count;
+    goods_info[id].discount_subtotal = Math.floor(goods_info[id].count / 3)*goods_info[id].price;
     save_localstoage("goods_info", goods_info);
     show_subtotal(id);
 }
 
-function discount_subtotal(id) {
-    var goods_info=getitem_local("goods_info");
+/*function discount_subtotal(id,goods_info) {
     goods_info[id].discount_subtotal = Math.floor(goods_info[id].count / 3)*goods_info[id].price;
     save_localstoage("goods_info", goods_info);
-}
+}*/
 
 function total() {
     var total=0;
