@@ -22,8 +22,9 @@ function add_goods_info_rows( goods_info) {
             .replace(/number/,goods_info[id].count)
             .replace(/add_goods_num_id/, 'add' + goods_info[id].barcode)
             .replace(/tr_id/, 'tr' + goods_info[id].barcode)
-            .replace(/subtotal_id/, 'subtotal' + goods_info[id].barcode);//小计功能没有加载
+            .replace(/subtotal_id/, 'subtotal' + goods_info[id].barcode)//小计功能没有加载.replace(/subtotal/,subtotal(id));
         $("#table_body").append(replace);
+        subtotal(id);
     })
 }
 
@@ -47,22 +48,33 @@ function add_button_event(id_name, file_name) {
 
 function show_goods_initial_number( goods_info) {
     _.each(_.keys(goods_info), function (id) {
-        bind_goods_button_function("add"+id,goods_info);
-        bind_goods_button_function("dec"+id,goods_info);
+        bind_goods_button_function("add"+id);
+        bind_goods_button_function("dec"+id);
     });
 }
 
-function bind_goods_button_function(id, goods_info) {
+function bind_goods_button_function(id) {
     $("#" + id).click(function () {
-        if(id.slice(0,3)=='add') nums=1;
-        if(id.slice(0,3)=='dec') nums=-1;
-        var num = parseInt(get_element_text_by_id(id)) + nums;
-        var number = parseInt(get_element_text_by_id("shopping_cart_num")) + nums;
-        show_num(num, id, goods_info, number);
-        if (num >= 3) discount_subtotal(id, goods_info, num);
-        total(id, goods_info, num);
-        subtotal(id, goods_info, num);
+        if(id.slice(0,3)=='add') replace_local_goods_info(id.slice(3),1);
+        if(id.slice(0,3)=='dec') replace_local_goods_info(id.slice(3),-1);
     });
+}
+
+function replace_local_goods_info(id, num) {
+    show_goods_num(id, num);
+    count_shopping_cart_num();
+    discount_subtotal(id);
+    subtotal(id);
+    total();
+    var goods_info=getitem_local("goods_info");
+    if(goods_info[id].count==0) del_goods_info_row(id);
+}
+
+function show_goods_num(id, num){
+    var goods_info=getitem_local("goods_info");
+    goods_info[id].count += num;
+    set_element_text_by_id(id,goods_info[id].count);
+    save_localstoage("goods_info", goods_info);
 }
 
 function count_shopping_cart_num(){
@@ -75,59 +87,33 @@ function count_shopping_cart_num(){
     show_shopping_cart_num();
 }
 
-/*function bind_goods_dec_button_function(id, goods_info) {
-    $("#dec" + id).click(function () {
-        var num = parseInt(get_element_text_by_id(id)) - 1;
-        var number = parseInt(get_element_text_by_id("shopping_cart_num")) - 1;
-        show_num(num, id, goods_info, number)
-        if (num >= 3) discount_subtotal(id, goods_info, num);
-        total(id, goods_info, num);
-        subtotal(id, goods_info, num);
-        if (num == 0) del_goods_info_row(id, goods_info);
-    });
-}*/
-
-function show_num(num, id, goods_info, number) {
-    set_element_text_by_id(id, num);
-    set_element_text_by_id("shopping_cart_num", number);
-    replace_local_goods_info(id, goods_info, num);
-    save_localstoage("num", number)
-}
-
-function replace_local_goods_info(id, goods_info, num) {
-    goods_info[id].count = num;
-    save_localstoage("goods_info", goods_info);
-}
-
-function del_goods_info_row(id, goods_info) {
-    goods_info[id] = undefined;
+function del_goods_info_row(id) {
+    var goods_info=getitem_local("goods_info");
+    delete goods_info[id];//goods_info[id]=undefined;
     save_localstoage("goods_info", goods_info);
     $("#tr" + id).remove();
-    jump_goods_info(id);
-}
-
-function jump_goods_info(id) {
-    var barcodes = getitem_local("barcode");
-    for (var i = 0; i < barcodes.length; i++)
-        if (barcodes[i] == id) barcodes.splice(i, 1);
-    save_localstoage("barcode", barcodes);
-    if (barcodes.length == 0) window.location.href = "goods_list.html";
+    if (_.keys(goods_info).length == 0) window.location.href = "goods_list.html";
 }
 
 function show_subtotal(id) {
     var goods_info = getitem_local("goods_info");
-    goods_info[id].count < 3 ? set_element_text_by_id('subtotal' + id, goods_info[id].subtotal + "元") :
+    if(goods_info[id].count < 3){
+        set_element_text_by_id('subtotal' + id, goods_info[id].subtotal + "元");
+    }else{
         set_element_text_by_id('subtotal' + id, goods_info[id].subtotal - goods_info[id].discount_subtotal + '(原价：' + goods_info[id].subtotal + '元)');
+    }
 }
 
-function subtotal(id, goods_info, num) {
-    goods_info[id].subtotal = goods_info[id].price * num;
+function subtotal(id) {
+    var goods_info=getitem_local("goods_info");
+    goods_info[id].subtotal = goods_info[id].price *goods_info[id].count;
     save_localstoage("goods_info", goods_info);
     show_subtotal(id);
 }
 
-function discount_subtotal(id, goods_info, num) {
-    goods_info[id].discount_subtotal = goods_info[id].price * Math.floor(num / 3);
+function discount_subtotal(id) {
+    var goods_info=getitem_local("goods_info");
+    goods_info[id].discount_subtotal = Math.floor(goods_info[id].count / 3)*goods_info[id].price;
     save_localstoage("goods_info", goods_info);
 }
 
